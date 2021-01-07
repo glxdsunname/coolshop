@@ -15,7 +15,7 @@ export default function Home(props) {
       <Grid container >
         {products.map( product => (
           <Slide direction="up" in={true} key={product.id}>
-          <Grid item  md={3}> 
+          <Grid item   xs={12} sm={6} md={4} lg={3}> 
           <Card>
             <Link href={`/products/${product.permalink}`} >
               <CardActionArea>
