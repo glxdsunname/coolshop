@@ -1,3 +1,6 @@
+import { Card, Box, CardActionArea, CardContent, CardMedia, Grid, Slide, Typography } from '@material-ui/core';
+import Link from 'next/link';
+import { Alert } from '@material-ui/lab';
 import Head from 'next/head'
 import { Layout } from '../components/Layout';
 import styles from '../styles/Home.module.css'
@@ -7,15 +10,46 @@ export default function Home(props) {
   const { products } = props;
   return (
     <Layout title="Home" commercePublicKey={props.commercePublicKey}>
-      <main className={styles.main}>
+      { products.length === 0 && <Alert>No product found</Alert> }
+      
+      <Grid container >
         {products.map( product => (
-          <div key={product.id}>
-              <img src={product.media.source} alt={product.name}/>
-              <p>{product.name}</p>
-              <p>{product.price.formatted_with_symbol}</p>
-          </div>
+          <Slide direction="up" in={true} key={product.id}>
+          <Grid item  md={3}> 
+          <Card>
+            <Link href={`/products/${product.permalink}`} >
+              <CardActionArea>
+                <CardMedia 
+                  component="img"
+                  alt={product.name}
+                  image={product.media.source}
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="body2"
+                    color="textPrimary"
+                    component="p"
+                  >
+                    {product.name}
+                  </Typography>
+                  <Box>
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      component="p"
+                    >
+                      {product.price.formatted_with_symbol}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </CardActionArea>
+            </Link>
+            </Card>
+          </Grid>
+          </Slide>
         ))}
-      </main>
+      </Grid>
     </Layout>
   )
 }
