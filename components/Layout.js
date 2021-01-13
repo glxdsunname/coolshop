@@ -14,10 +14,25 @@ import {
 import Head from 'next/head';
 import { theme, useStyles } from '../utils/styles.js';
 import NextLink from 'next/link';
+import { Store } from './Store.js';
+import { CART_RETRIEVE_SUCCESS, CART_RETRIEVE_REQUEST } from '../utils/constants';
+import getCommerce from '../utils/commerce';
 
 export const Layout = ({children, commercePublicKey, title  = 'Coolshop'}) => {
 
     const classes = useStyles();
+    const { state, dispatch } = useContext(Store);
+    const { cart } = state;
+    useEffect(() => {
+      // const fetchCart = async () => {
+      //   const commerce = getCommerce(commercePublicKey);
+      //   dispatch({ type: CART_RETRIEVE_REQUEST});
+      //   const cartData = await commerce.cart.retrieve();
+      //   dispatch({ type : CART_RETRIEVE_SUCCESS, payload: cartData});
+      // }
+      // fetchCart();
+    }, []);
+
     return (
         <React.Fragment>
             <Head>

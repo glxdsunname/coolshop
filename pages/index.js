@@ -12,7 +12,7 @@ export default function Home(props) {
     <Layout title="Home" commercePublicKey={props.commercePublicKey}>
       { products.length === 0 && <Alert>No product found</Alert> }
       
-      <Grid container >
+      <Grid container spacing={1} >
         {products.map( product => (
           <Slide direction="up" in={true} key={product.id}>
           <Grid item   xs={12} sm={6} md={4} lg={3}> 
