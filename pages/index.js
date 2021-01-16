@@ -2,7 +2,7 @@ import { Card, Box, CardActionArea, CardContent, CardMedia, Grid, Slide, Typogra
 import Link from 'next/link';
 import { Alert } from '@material-ui/lab';
 import Head from 'next/head'
-import { Layout } from '../components/Layout';
+import  Layout  from '../components/Layout';
 import styles from '../styles/Home.module.css'
 import getCommerce from '../utils/commerce'
 

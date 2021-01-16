@@ -18,7 +18,7 @@ import { Store } from './Store.js';
 import { CART_RETRIEVE_SUCCESS, CART_RETRIEVE_REQUEST } from '../utils/constants';
 import getCommerce from '../utils/commerce';
 
-export const Layout = ({children, commercePublicKey, title  = 'Coolshop'}) => {
+const Layout = ({children, commercePublicKey, title  = 'Coolshop'}) => {
 
     const classes = useStyles();
     const { state, dispatch } = useContext(Store);
@@ -105,3 +105,5 @@ export const Layout = ({children, commercePublicKey, title  = 'Coolshop'}) => {
         </React.Fragment>
     )
 }
+
+export default Layout;
