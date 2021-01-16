@@ -8,6 +8,7 @@ import getCommerce from '../utils/commerce'
 
 export default function Home(props) {
   const { products } = props;
+  // console.log(props);
   return (
     <Layout title="Home" commercePublicKey={props.commercePublicKey}>
       { products.length === 0 && <Alert>No product found</Alert> }

@@ -17,7 +17,6 @@ function MyApp({ Component, pageProps }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, [])
-
   return(
     <StoreProvider>
       <Component {...pageProps} />
@@ -25,12 +24,14 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyApp
 
-MyApp.getInititalProps = async () => {
+
+MyApp.getInitialProps = async () => {
+  // console.log('callback from app');
   return {
     pageProps: {
       commercePublicKey: process.env.COMMERCE_PUBLIC_KEY,
     },
   };
 }
+export default MyApp;

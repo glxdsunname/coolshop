@@ -24,13 +24,13 @@ export const Layout = ({children, commercePublicKey, title  = 'Coolshop'}) => {
     const { state, dispatch } = useContext(Store);
     const { cart } = state;
     useEffect(() => {
-      // const fetchCart = async () => {
-      //   const commerce = getCommerce(commercePublicKey);
-      //   dispatch({ type: CART_RETRIEVE_REQUEST});
-      //   const cartData = await commerce.cart.retrieve();
-      //   dispatch({ type : CART_RETRIEVE_SUCCESS, payload: cartData});
-      // }
-      // fetchCart();
+      const fetchCart = async () => {
+        const commerce = getCommerce(commercePublicKey);
+        dispatch({ type: CART_RETRIEVE_REQUEST});
+        const cartData = await commerce.cart.retrieve();
+        dispatch({ type : CART_RETRIEVE_SUCCESS, payload: cartData});
+      }
+      fetchCart();
     }, []);
 
     return (
@@ -70,7 +70,17 @@ export const Layout = ({children, commercePublicKey, title  = 'Coolshop'}) => {
                   href="/cart"
                   className={classes.link}
                 >
-                  Cart
+                  {
+                    cart.loading ? (
+                    <CircularProgress/>
+                    ) : cart.data.total_items > 0 ? (
+                      <Badge badgeContent={cart.data.total_items} color="primary">
+                        Cart
+                      </Badge>
+                    ) : (
+                      'Cart'
+                      )
+                  }
                 </Link>
               </NextLink>
             </nav>

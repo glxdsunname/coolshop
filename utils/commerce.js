@@ -4,7 +4,7 @@ let commerce = null;
 
 function getCommerce(commercePublicKey) {
     if (commerce) {
-        return commerce
+        return commerce;
     } else {
         const publicKey = commercePublicKey || process.env.COMMERCE_PUBLIC_KEY;
         const devEnvironment = process.env.NODE_ENV === 'development';

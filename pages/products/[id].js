@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Card, Box, Button, CardActionArea, CardContent, CardMedia, Grid, Slide, Typography, List, ListItem, Select, MenuItem } from '@material-ui/core';
 import Link from 'next/link';
 import { Alert } from '@material-ui/lab';
@@ -6,16 +6,31 @@ import Head from 'next/head'
 import { Layout } from '../../components/Layout';
 import getCommerce from '../../utils/commerce'
 import { useStyles } from '../../utils/styles';
+import { Store } from '../../components/Store';
+import { CART_RETRIEVE_SUCCESS } from '../../utils/constants';
+import  Router  from 'next/router';
 
 export default function Product(props) {
   const { product } = props;
   const classes = useStyles();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
   const addToCartHandler = async () => {
-      
+    const commerce = getCommerce(props.commercePublicKey);
+    const lineItem = cart.data.line_items.find( x => x.product_id === product.id);
+    if (lineItem) {
+        const cartData = await commerce.cart.update(lineItem.id, {quantity});
+        dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData.cart });
+        Router.push('/cart');
+    } else {
+        const cartData = await commerce.cart.add( product.id, quantity);
+        dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData.cart });
+        Router.push('/cart');
+    }
   }
   return (
-    <Layout title="Home" commercePublicKey={props.commercePublicKey}>
+    <Layout title={product.name} commercePublicKey={props.commercePublicKey}>
      <Slide direction="up" in={true}>
         <Grid container spacing={1}>
             <Grid item md={6}>
@@ -101,6 +116,7 @@ export default function Product(props) {
                         </ListItem>
                         <ListItem>
                             <Button
+                                onClick={addToCartHandler}
                                 fullWidth
                                 variant="contained"
                                 color="primary"
@@ -126,6 +142,7 @@ export async function getServerSideProps({ params }) {
     return {
       props: {
         product,
+        commercePublicKey:process.env.COMMERCE_PUBLIC_KEY,
       },
     };
   }
